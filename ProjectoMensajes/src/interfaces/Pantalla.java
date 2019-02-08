@@ -10,7 +10,6 @@ import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.net.UnknownHostException;
 
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -21,20 +20,18 @@ import Modelo.Mensaje;
 public class Pantalla extends JFrame {
 	
 	private ReceptorMensajes receptorThread;
-	private static JTextArea mensajesRecibidos; 
-	private JTextField msjParaEnviar;
-	private static final int PUERTO = 4321;
-	private int altoTextField = 50;
+	static JTextArea mensajesRecibidos;
+	JTextField msjParaEnviar;
+	int altoTextField = 50;
 	
-	//emisor y receptor
-	private MulticastSocket ms;
-	//emisor
-	private ByteArrayOutputStream bos = new ByteArrayOutputStream();
-	private ObjectOutputStream oos;
-	private InetAddress grupo;
-	//receptor
-	private ByteArrayInputStream bis;
-	private ObjectInputStream ois;
+	//yeah xd
+	//private MulticastSocket ms;
+	//Obtenemos una IP de multicast, tambien llamada grupos, 
+	//por que varios equipos pueden escuchar de esa IP
+	//preparar datos
+	//private ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	//private ObjectOutputStream oos;
+	//private InetAddress grupo;
 
 	public Pantalla() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Al cerrar el programa se detiene
@@ -47,19 +44,17 @@ public class Pantalla extends JFrame {
 		iniciarPantallaMensajes();
 		iniciarMsjParaEnviar();
 		//tengo que unirme al grupo antes de lanzar el thread :D
-		configurationMensajes();
+		//configurationMensajes();
 		receptorThread = new ReceptorMensajes();
 		receptorThread.start();
 	}
 	
-	private void configurationMensajes() {
+	/*private void configurationMensajes() {
 		try {
-			//emisor
-			ms = new MulticastSocket( PUERTO );
+			ms = new MulticastSocket( 4321 );
 			grupo = InetAddress.getByName("224.0.0.1");
 			ms.joinGroup( grupo );//el socket ya esta escuchando
-			oos = new ObjectOutputStream( bos );
-			//receptor
+			//oos = new ObjectOutputStream( bos );
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,7 +62,7 @@ public class Pantalla extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	private void iniciarPantallaMensajes() {
 		mensajesRecibidos = new JTextArea();
@@ -111,16 +106,22 @@ public class Pantalla extends JFrame {
 	}
 	
 	private void enterPresionado() {
-		DatagramPacket paqueteEnviar = new DatagramPacket( bos.toByteArray(), bos.toByteArray().length, grupo, PUERTO );
-		//enviar paquete
 		try {
+			MulticastSocket ms = new MulticastSocket( 4321 );
+			//Obtenemos una IP de multicast, tambien llamada grupos, 
+			//por que varios equipos pueden escuchar de esa IP
+			InetAddress grupo = InetAddress.getByName("224.0.0.1");
+			ms.joinGroup( grupo );//el socket ya esta escuchando
 			//preparar datos
 			Mensaje mensajeEnviar = new Mensaje("Diego", msjParaEnviar.getText(), new java.util.Date() );
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream( bos );
 			oos.writeObject( mensajeEnviar );
+			DatagramPacket paqueteEnviar = new DatagramPacket( bos.toByteArray(), bos.toByteArray().length, grupo, 4321 );
 			//enviar paquete
 			ms.send( paqueteEnviar );
 			anyadirMensaje( mensajeEnviar.toString() );
-			System.out.println( "mensaje enviado" + mensajeEnviar.toString() );
+			//System.out.println( mensajeEnviar.toString() );
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -132,20 +133,19 @@ public class Pantalla extends JFrame {
 		@Override
 		public void run() {
 			try {
-				//MulticastSocket ms = new MulticastSocket( PUERTO );
+				MulticastSocket ms = new MulticastSocket( 4321 );
 				//Obtenemos una IP de multicast, tambien llamada grupos, 
 				//por que varios equipos pueden escuchar de esa IP
-				//InetAddress grupo = InetAddress.getByName("224.0.0.1");
-				//ms.joinGroup( grupo );//el socket ya se encuentra escuchando cualquier dato
+				InetAddress grupo = InetAddress.getByName("224.0.0.1");
+				ms.joinGroup( grupo );//el socket ya se encuentra escuchando cualquier dato
 				//recepcion de paquete
+				DatagramPacket paqueteRecibido = new DatagramPacket(new byte[1024], 1024);
 				while ( true ) {
-					DatagramPacket paqueteRecibido = new DatagramPacket(new byte[1024], 1024);
+					System.out.println("Esperando paquete...");
 					ms.receive( paqueteRecibido );
 					ByteArrayInputStream bis = new ByteArrayInputStream( paqueteRecibido.getData() );
 					ObjectInputStream ois = new ObjectInputStream( bis );
-					System.out.println("Esperando paquete...");
 					Mensaje mensajeRecibido = (Mensaje) ois.readObject();
-					//paqueteRecibido.setData( new byte[1024] );
 					System.out.println( "mensaje recibido: " + mensajeRecibido );
 					anyadirMensaje( mensajeRecibido.toString() );
 				}
