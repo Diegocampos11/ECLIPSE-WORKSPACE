@@ -31,6 +31,8 @@ public class Pantalla extends JFrame {
 	private InetAddress grupo;
 	private Mensaje mensajeEnviar;
 	private DatagramPacket paqueteEnviar;
+	private String nombre;
+	private boolean isNombreIngresado = false;
 
 	public Pantalla() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Al cerrar el programa se detiene
@@ -45,22 +47,22 @@ public class Pantalla extends JFrame {
 		//tengo que unirme al grupo antes de lanzar el thread :D
 		configurationMensajes();
 		receptorThread = new ReceptorMensajes();
-		receptorThread.start();
+		//receptorThread.start();
 	}
 	
 	private void configurationMensajes() {
-		try {
-			ms = new MulticastSocket( 4321 );
-			grupo = InetAddress.getByName("224.0.0.1");
-			ms.joinGroup( grupo );//el socket ya esta escuchando
-		} catch (IOException e) {
+		//try {
+			mensajesRecibidos.setText("Bienvenido al chat de Diego Camposx!\n"
+					+ "Ingrese su nombre para empezar a chatear\n");
+		/*} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	private void iniciarPantallaMensajes() {
 		mensajesRecibidos = new JTextArea();
+		mensajesRecibidos.setFont( mensajesRecibidos.getFont().deriveFont( 18f ) );
 		mensajesRecibidos.setLineWrap(true);
 		mensajesRecibidos.setWrapStyleWord(true);//textos largos
 		mensajesRecibidos.setEditable(false);
@@ -70,6 +72,7 @@ public class Pantalla extends JFrame {
 	
 	private void iniciarMsjParaEnviar() {
 		msjParaEnviar = new JTextField();
+		msjParaEnviar.setFont( mensajesRecibidos.getFont() );
 		msjParaEnviar.setBounds( 0, this.getContentPane().getHeight() - altoTextField, this.getContentPane().getWidth(), altoTextField);
 		this.add( msjParaEnviar );
 		msjParaEnviar.requestFocus();
@@ -102,15 +105,30 @@ public class Pantalla extends JFrame {
 	
 	private void enterPresionado() {
 		try {
-			//preparar datos
-			mensajeEnviar = new Mensaje("Diego", msjParaEnviar.getText(), new java.util.Date() );
-			bos = new ByteArrayOutputStream();
-			oos = new ObjectOutputStream( bos );
-			oos.writeObject( mensajeEnviar );
-			paqueteEnviar = new DatagramPacket( bos.toByteArray(), bos.toByteArray().length, grupo, 4321 );
-			//enviar paquete
-			ms.send( paqueteEnviar );
-			//limpiar paquete tambien
+			if ( isNombreIngresado ){//preparar datos
+				mensajeEnviar = new Mensaje("Diego", msjParaEnviar.getText(), new java.util.Date() );
+				bos = new ByteArrayOutputStream();
+				oos = new ObjectOutputStream( bos );
+				oos.writeObject( mensajeEnviar );
+				paqueteEnviar = new DatagramPacket( bos.toByteArray(), bos.toByteArray().length, grupo, 4321 );
+				//enviar paquete
+				ms.send( paqueteEnviar );
+				//limpiar paquete tambien
+				oos.close();
+				bos.close();
+			}
+			else {
+				nombre = msjParaEnviar.getText();
+				mensajesRecibidos.append("Su nombre se ha establecido como: " + nombre + " \n"
+					+ "Ya puedes empezar a chatear!!" );
+				//
+				ms = new MulticastSocket( 4321 );
+				grupo = InetAddress.getByName("224.0.0.1");
+				ms.joinGroup( grupo );//el socket ya esta escuchando
+				//
+				receptorThread.start();
+				isNombreIngresado = true;
+			}
 			limpiarDatos();
 			
 		} catch (IOException e) {
@@ -128,12 +146,12 @@ public class Pantalla extends JFrame {
 				ObjectInputStream ois;
 				Mensaje mensajeRecibido;
 				while ( true ) {
-					System.out.println("PANTALLA Esperando paquete...");
+					//System.out.println("PANTALLA Esperando paquete...");
 					ms.receive( paqueteRecibido );
 					bis = new ByteArrayInputStream( paqueteRecibido.getData() );
 					ois = new ObjectInputStream( bis );
 					mensajeRecibido = (Mensaje) ois.readObject();
-					System.out.println( "mensaje recibido: " + mensajeRecibido );
+					//System.out.println( "mensaje recibido: " + mensajeRecibido );
 					anyadirMensaje( mensajeRecibido.toString() );
 				}
 				//ois.close();
@@ -148,6 +166,5 @@ public class Pantalla extends JFrame {
 	
 	private void limpiarDatos(){
 		msjParaEnviar.setText("");
-		paqueteEnviar.setData( new byte[1024] );
 	}
 }

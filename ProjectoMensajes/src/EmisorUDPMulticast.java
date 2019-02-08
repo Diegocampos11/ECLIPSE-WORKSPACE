@@ -17,7 +17,7 @@ public class EmisorUDPMulticast {
 			InetAddress grupo = InetAddress.getByName("224.0.0.1");
 			ms.joinGroup( grupo );//el socket ya esta escuchando
 			//preparar datos
-			Mensaje mensajeEnviar = new Mensaje("Diego", "Hola amigos de cbe", new java.util.Date() );
+			Mensaje mensajeEnviar = new Mensaje("Diego", "x", new java.util.Date() );
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ObjectOutputStream oos = new ObjectOutputStream( bos );
 			oos.writeObject( mensajeEnviar );
