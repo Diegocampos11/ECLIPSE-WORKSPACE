@@ -126,13 +126,12 @@ public class Pantalla extends JFrame {
 				DatagramPacket paqueteRecibido = new DatagramPacket(new byte[1024], 1024);
 				ByteArrayInputStream bis;
 				ObjectInputStream ois;
-				Mensaje mensajeRecibido;
 				while ( true ) {
 					System.out.println("PANTALLA Esperando paquete...");
 					ms.receive( paqueteRecibido );
 					bis = new ByteArrayInputStream( paqueteRecibido.getData() );
 					ois = new ObjectInputStream( bis );
-					mensajeRecibido = (Mensaje) ois.readObject();
+					Mensaje mensajeRecibido = (Mensaje) ois.readObject();
 					System.out.println( "mensaje recibido: " + mensajeRecibido );
 					anyadirMensaje( mensajeRecibido.toString() );
 				}

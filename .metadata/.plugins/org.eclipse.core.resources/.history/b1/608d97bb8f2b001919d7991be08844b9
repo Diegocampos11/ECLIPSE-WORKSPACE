@@ -24,13 +24,14 @@ public class Pantalla extends JFrame {
 	JTextField msjParaEnviar;
 	int altoTextField = 50;
 	
-	//remitente
-	private MulticastSocket ms;
-	private ByteArrayOutputStream bos;
-	private ObjectOutputStream oos;
-	private InetAddress grupo;
-	private Mensaje mensajeEnviar;
-	private DatagramPacket paqueteEnviar;
+	//yeah xd
+	//private MulticastSocket ms;
+	//Obtenemos una IP de multicast, tambien llamada grupos, 
+	//por que varios equipos pueden escuchar de esa IP
+	//preparar datos
+	//private ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	//private ObjectOutputStream oos;
+	//private InetAddress grupo;
 
 	public Pantalla() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Al cerrar el programa se detiene
@@ -43,21 +44,25 @@ public class Pantalla extends JFrame {
 		iniciarPantallaMensajes();
 		iniciarMsjParaEnviar();
 		//tengo que unirme al grupo antes de lanzar el thread :D
-		configurationMensajes();
+		//configurationMensajes();
 		receptorThread = new ReceptorMensajes();
 		receptorThread.start();
 	}
 	
-	private void configurationMensajes() {
+	/*private void configurationMensajes() {
 		try {
 			ms = new MulticastSocket( 4321 );
 			grupo = InetAddress.getByName("224.0.0.1");
 			ms.joinGroup( grupo );//el socket ya esta escuchando
+			//oos = new ObjectOutputStream( bos );
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	private void iniciarPantallaMensajes() {
 		mensajesRecibidos = new JTextArea();
@@ -102,16 +107,21 @@ public class Pantalla extends JFrame {
 	
 	private void enterPresionado() {
 		try {
+			MulticastSocket ms = new MulticastSocket( 4321 );
+			//Obtenemos una IP de multicast, tambien llamada grupos, 
+			//por que varios equipos pueden escuchar de esa IP
+			InetAddress grupo = InetAddress.getByName("224.0.0.1");
+			ms.joinGroup( grupo );//el socket ya esta escuchando
 			//preparar datos
-			mensajeEnviar = new Mensaje("Diego", msjParaEnviar.getText(), new java.util.Date() );
-			bos = new ByteArrayOutputStream();
-			oos = new ObjectOutputStream( bos );
+			Mensaje mensajeEnviar = new Mensaje("Diego", msjParaEnviar.getText(), new java.util.Date() );
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream( bos );
 			oos.writeObject( mensajeEnviar );
-			paqueteEnviar = new DatagramPacket( bos.toByteArray(), bos.toByteArray().length, grupo, 4321 );
+			DatagramPacket paqueteEnviar = new DatagramPacket( bos.toByteArray(), bos.toByteArray().length, grupo, 4321 );
 			//enviar paquete
 			ms.send( paqueteEnviar );
-			//limpiar paquete tambien
-			limpiarDatos();
+			anyadirMensaje( mensajeEnviar.toString() );
+			//System.out.println( mensajeEnviar.toString() );
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -123,16 +133,19 @@ public class Pantalla extends JFrame {
 		@Override
 		public void run() {
 			try {
+				MulticastSocket ms = new MulticastSocket( 4321 );
+				//Obtenemos una IP de multicast, tambien llamada grupos, 
+				//por que varios equipos pueden escuchar de esa IP
+				InetAddress grupo = InetAddress.getByName("224.0.0.1");
+				ms.joinGroup( grupo );//el socket ya se encuentra escuchando cualquier dato
+				//recepcion de paquete
 				DatagramPacket paqueteRecibido = new DatagramPacket(new byte[1024], 1024);
-				ByteArrayInputStream bis;
-				ObjectInputStream ois;
-				Mensaje mensajeRecibido;
 				while ( true ) {
-					System.out.println("PANTALLA Esperando paquete...");
+					System.out.println("Esperando paquete...");
 					ms.receive( paqueteRecibido );
-					bis = new ByteArrayInputStream( paqueteRecibido.getData() );
-					ois = new ObjectInputStream( bis );
-					mensajeRecibido = (Mensaje) ois.readObject();
+					ByteArrayInputStream bis = new ByteArrayInputStream( paqueteRecibido.getData() );
+					ObjectInputStream ois = new ObjectInputStream( bis );
+					Mensaje mensajeRecibido = (Mensaje) ois.readObject();
 					System.out.println( "mensaje recibido: " + mensajeRecibido );
 					anyadirMensaje( mensajeRecibido.toString() );
 				}
@@ -146,8 +159,7 @@ public class Pantalla extends JFrame {
 		}
 	}
 	
-	private void limpiarDatos(){
-		msjParaEnviar.setText("");
-		paqueteEnviar.setData( new byte[1024] );
-	}
+	/*private class DeliverMensajes extends Thread{
+		
+	}*/
 }
