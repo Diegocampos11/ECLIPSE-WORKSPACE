@@ -10,11 +10,9 @@ import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import Modelo.Mensaje;
 
 public class Pantalla extends JFrame {
@@ -32,7 +30,8 @@ public class Pantalla extends JFrame {
 	private Mensaje mensajeEnviar;
 	private DatagramPacket paqueteEnviar;
 	private String nombre;
-	private boolean isNombreIngresado = false;
+	private byte estadoConfiguracion = 0;
+	private String IPGroup;
 
 	public Pantalla() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Al cerrar el programa se detiene
@@ -45,19 +44,9 @@ public class Pantalla extends JFrame {
 		iniciarPantallaMensajes();
 		iniciarMsjParaEnviar();
 		//tengo que unirme al grupo antes de lanzar el thread :D
-		configurationMensajes();
+		//configurationMensajes();
 		receptorThread = new ReceptorMensajes();
 		//receptorThread.start();
-	}
-	
-	private void configurationMensajes() {
-		//try {
-			mensajesRecibidos.setText("Bienvenido al chat de Diego Camposx!\n"
-					+ "Ingrese su nombre para empezar a chatear\n");
-		/*} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 	}
 
 	private void iniciarPantallaMensajes() {
@@ -68,6 +57,8 @@ public class Pantalla extends JFrame {
 		mensajesRecibidos.setEditable(false);
 		mensajesRecibidos.setBounds(0, 0, this.getContentPane().getWidth(), this.getContentPane().getHeight() - altoTextField );
 		this.add(mensajesRecibidos);
+		anyadirMensaje("Bienvenido al chat de Diego Camposx!\n"
+				+ "Ingrese la IP del grupo...");
 	}
 	
 	private void iniciarMsjParaEnviar() {
@@ -105,29 +96,39 @@ public class Pantalla extends JFrame {
 	
 	private void enterPresionado() {
 		try {
-			if ( isNombreIngresado ){//preparar datos
-				mensajeEnviar = new Mensaje("Diego", msjParaEnviar.getText(), new java.util.Date() );
-				bos = new ByteArrayOutputStream();
-				oos = new ObjectOutputStream( bos );
-				oos.writeObject( mensajeEnviar );
-				paqueteEnviar = new DatagramPacket( bos.toByteArray(), bos.toByteArray().length, grupo, 4321 );
-				//enviar paquete
-				ms.send( paqueteEnviar );
-				//limpiar paquete tambien
-				oos.close();
-				bos.close();
-			}
-			else {
-				nombre = msjParaEnviar.getText();
-				mensajesRecibidos.append("Su nombre se ha establecido como: " + nombre + " \n"
-					+ "Ya puedes empezar a chatear!!" );
-				//
-				ms = new MulticastSocket( 4321 );
-				grupo = InetAddress.getByName("224.0.0.1");
-				ms.joinGroup( grupo );//el socket ya esta escuchando
-				//
-				receptorThread.start();
-				isNombreIngresado = true;
+			switch ( estadoConfiguracion ){//preparar datos
+				case 2://case almost always true
+					mensajeEnviar = new Mensaje( nombre, msjParaEnviar.getText(), new java.util.Date() );
+					bos = new ByteArrayOutputStream();
+					oos = new ObjectOutputStream( bos );
+					oos.writeObject( mensajeEnviar );
+					paqueteEnviar = new DatagramPacket( bos.toByteArray(), bos.toByteArray().length, grupo, 4321 );
+					//enviar paquete
+					ms.send( paqueteEnviar );
+					//limpiar paquete tambien
+					oos.close();
+					bos.close();
+				break;
+				case 0:
+					//pido la ip
+					IPGroup = msjParaEnviar.getText();
+					estadoConfiguracion = 1;
+					//le digo que ingrese el nombre y le digo IP
+					anyadirMensaje("Su IP de grupo se ha establecido como: " + IPGroup + "\nIngrese su nombre a mostrar..." );
+				break;
+				case 1:
+					//pido el nombre
+					nombre = msjParaEnviar.getText();
+					anyadirMensaje("Su nombre se ha establecido como: " + nombre + " \n"
+						+ "Ya puedes empezar a chatear!!" );
+					//Inicio el socket para que no reciba mensajes cuando aun no ha configurado por completo su propio chat
+					ms = new MulticastSocket( 4321 );
+					grupo = InetAddress.getByName( IPGroup );
+					ms.joinGroup( grupo );//el socket ya esta escuchando
+					//estadoConfiguracion terminado, codigo 2
+					estadoConfiguracion = 2;
+					receptorThread.start();
+				break;
 			}
 			limpiarDatos();
 			

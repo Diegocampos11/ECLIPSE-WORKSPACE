@@ -14,7 +14,7 @@ public class EmisorUDPMulticast {
 			MulticastSocket ms = new MulticastSocket( 4321 );
 			//Obtenemos una IP de multicast, tambien llamada grupos, 
 			//por que varios equipos pueden escuchar de esa IP
-			InetAddress grupo = InetAddress.getByName("224.0.0.1");
+			InetAddress grupo = InetAddress.getByName("224.0.0.5");
 			ms.joinGroup( grupo );//el socket ya esta escuchando
 			//preparar datos
 			Mensaje mensajeEnviar = new Mensaje("Diego", "x", new java.util.Date() );
