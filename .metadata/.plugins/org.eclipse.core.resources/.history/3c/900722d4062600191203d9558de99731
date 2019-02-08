@@ -1,0 +1,25 @@
+package clases;
+
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+public class emisorUDP {
+
+	public static void main(String[] args) {
+		int puerto = 4321;
+		InetAddress destino = null;
+		try {
+			destino = InetAddress.getByName("192.168.102.112");
+		} catch (UnknownHostException e) {
+			System.out.println("Error inneraddress");
+			e.printStackTrace();
+		}
+		byte[] buffer = new byte[1024];
+		String msj = "Hola, esto es un mensaje enviado por UDP";
+		buffer = msj.getBytes();
+		
+		DatagramPacket paqueteEnviado = new DatagramPacket( buffer, buffer.length );
+	}
+
+}

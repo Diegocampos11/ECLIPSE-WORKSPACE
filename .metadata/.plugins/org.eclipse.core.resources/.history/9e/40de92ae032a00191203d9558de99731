@@ -1,0 +1,8 @@
+
+public class ReceptorUDPMulticast {
+
+	public static void main(String[] args) {
+		
+	}
+
+}

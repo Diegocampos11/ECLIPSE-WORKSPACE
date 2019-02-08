@@ -1,0 +1,91 @@
+package interfaces;
+
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+public class Pantalla extends JFrame {
+	
+	private ReceptorMensajes receptorThread;
+	static JTextArea mensajesRecibidos;
+	JTextField msjParaEnviar;
+	int altoTextField = 50;
+
+	public Pantalla() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Al cerrar el programa se detiene
+		setSize(400,600); //tamaño, ancho x alto
+		setLocationRelativeTo(null); //Centra la ventana en el monitor, luego se podrá mover.
+		setVisible(true); //Muestra la ventana
+		setLayout(null); //No queremos plantillas
+		setResizable(false);//Si queremos tamaño fijo
+		setTitle("Mensajes recibidos");
+		iniciarPantallaMensajes();
+		iniciarMsjParaEnviar();
+		//
+		receptorThread = new ReceptorMensajes();
+		//receptorThread.start();
+	}
+	
+	private void iniciarPantallaMensajes() {
+		mensajesRecibidos = new JTextArea();
+		mensajesRecibidos.setLineWrap(true);
+		mensajesRecibidos.setWrapStyleWord(true);//textos largos
+		mensajesRecibidos.setEditable(false);
+		mensajesRecibidos.setBounds(0, 0, this.getContentPane().getWidth(), this.getContentPane().getHeight() - altoTextField );
+		this.add(mensajesRecibidos);
+	}
+	
+	private void iniciarMsjParaEnviar() {
+		msjParaEnviar = new JTextField();
+		msjParaEnviar.setBounds( 0, this.getContentPane().getHeight() - altoTextField, this.getContentPane().getWidth(), altoTextField);
+		this.add( msjParaEnviar );
+		msjParaEnviar.requestFocus();
+		msjParaEnviar.addKeyListener(new KeyListener() {
+
+	        @Override
+	        public void keyPressed(KeyEvent e) {
+	            if ((e.getKeyCode() == KeyEvent.VK_ENTER) ) {
+	                enterPresionado();
+	            }
+	        }
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+	    });
+	}
+	
+	public static void anyadirMensaje(String msj) {
+		mensajesRecibidos.append("\n"+msj);
+	}
+	
+	private void enterPresionado() {
+		System.out.println("enter");
+	}
+
+	public class ReceptorMensajes extends Thread{
+		/**public ReceptorMensajes() {
+			
+		}*/
+		
+		@Override
+		public void run() {
+			while(true) System.out.println("hpa");
+		}
+	}
+	
+	/*private class DeliverMensajes extends Thread{
+		
+	}*/
+}

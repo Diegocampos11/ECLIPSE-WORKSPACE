@@ -1,0 +1,23 @@
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+
+public class EmisorUDPMulticast {
+
+	public static void main(String[] args) {
+		try {
+			MulticastSocket ms = new MulticastSocket( 4321 );
+			//Obtenemos una IP de multicast, tambien llamada grupos, 
+			//por que varios equipos pueden escuchar de esa IP
+			InetAddress grupo = InetAddress.getByName("224.0.0.1");
+			ms.joinGroup( grupo );//el socket ya esta escuchando
+			DatagramPacket paqueteRecibido = new DatagramPacket( new byte[1024], 1024 );
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

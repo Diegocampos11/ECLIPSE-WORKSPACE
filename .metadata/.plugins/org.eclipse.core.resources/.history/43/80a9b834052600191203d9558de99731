@@ -1,0 +1,10 @@
+package clases;
+
+public class ReceptorUDP {
+	public static int PUERTO = 4321;
+
+	public static void main(String[] args) {
+		
+	}
+
+}

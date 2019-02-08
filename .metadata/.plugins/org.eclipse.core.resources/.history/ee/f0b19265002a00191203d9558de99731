@@ -1,0 +1,9 @@
+
+public class receptorUDB {
+
+	public static void main(String[] args) {
+		byte[] bytesObjetosRecibidos = new byte[1024];
+		
+	}
+
+}
