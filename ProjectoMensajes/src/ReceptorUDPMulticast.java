@@ -14,7 +14,7 @@ public class ReceptorUDPMulticast {
 			MulticastSocket ms = new MulticastSocket( 4321 );
 			//Obtenemos una IP de multicast, tambien llamada grupos, 
 			//por que varios equipos pueden escuchar de esa IP
-			InetAddress grupo = InetAddress.getByName("224.0.0.5");
+			InetAddress grupo = InetAddress.getByName("224.0.0.0");
 			ms.joinGroup( grupo );//el socket ya se encuentra escuchando cualquier dato
 			//recepcion de paquete
 			DatagramPacket paqueteRecibido = new DatagramPacket(new byte[1024], 1024);

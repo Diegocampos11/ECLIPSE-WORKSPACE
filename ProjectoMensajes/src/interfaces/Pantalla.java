@@ -1,5 +1,7 @@
 package interfaces;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.ByteArrayInputStream;
@@ -13,8 +15,10 @@ import java.net.MulticastSocket;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
@@ -24,9 +28,10 @@ import Modelo.Mensaje;
 public class Pantalla extends JFrame {
 	
 	private ReceptorMensajes receptorThread;
-	static JTextArea mensajesRecibidos;
-	JTextField msjParaEnviar;
-	int altoTextField = 50;
+	private static JTextArea mensajesRecibidos;
+	private JScrollPane areaScrollPane;
+	private JTextField msjParaEnviar;
+	private int altoTextField = 50;
 	
 	//remitente
 	private MulticastSocket ms;
@@ -61,7 +66,15 @@ public class Pantalla extends JFrame {
 		mensajesRecibidos.setWrapStyleWord(true);//textos largos
 		mensajesRecibidos.setEditable(false);
 		mensajesRecibidos.setBounds(0, 0, this.getContentPane().getWidth(), this.getContentPane().getHeight() - altoTextField );
-		this.add(mensajesRecibidos);
+		mensajesRecibidos.setBorder( new LineBorder( Color.BLACK ) );
+		//añadir scroll al jtextarea
+		areaScrollPane = new JScrollPane();
+		areaScrollPane.setVerticalScrollBarPolicy( JScrollPane.VERTICAL_SCROLLBAR_ALWAYS );
+		areaScrollPane.setBounds(0, 0, this.getContentPane().getWidth(), this.getContentPane().getHeight() - altoTextField );
+		areaScrollPane.getViewport().setBackground( Color.BLACK );
+		areaScrollPane.getViewport().add( mensajesRecibidos );
+		this.add( areaScrollPane );//se añade el scroll pane CON EL TEXT AREA XD. Por lo tanto, ya no hay que agregar el textarea :o
+		this.repaint();
 		anyadirMensaje("Bienvenido al chat de Diego Camposx!\n"
 				+ "Ingrese la IP del grupo...");
 	}
@@ -73,8 +86,8 @@ public class Pantalla extends JFrame {
 		this.add( msjParaEnviar );
 		msjParaEnviar.requestFocus();
 		//COnvierto un jtextfield monolinea a multilinea :D
-		/*forma larga...
-		Document document= msjParaEnviar.getDocument();
+		//forma larga...
+		/*Document document= msjParaEnviar.getDocument();
 		AbstractDocument abstractDocument= (AbstractDocument) document;
 		DocumentFilter filter= new DocumentFilter();
 		abstractDocument.setDocumentFilter( filter );*/
