@@ -38,6 +38,18 @@
     <fullyQualifiedTypeName name="java.io.ObjectOutputStream"/>
     <fullyQualifiedTypeName name="interfaces.Pantalla"/>
     <fullyQualifiedTypeName name="java.awt.event.KeyListener"/>
-    <fullyQualifiedTypeName name="interfaces.Pantalla.ReceptorMensajes"/>
     <fullyQualifiedTypeName name="Modelo.Mensaje"/>
+    <fullyQualifiedTypeName name="interfaces.Pantalla.ReceptorMensajes"/>
+    <fullyQualifiedTypeName name="java.util.Set"/>
+    <fullyQualifiedTypeName name="java.util.HashSet"/>
+    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+    <fullyQualifiedTypeName name="javax.swing.text.Document"/>
+    <fullyQualifiedTypeName name="javax.swing.text.DocumentFilter"/>
+    <fullyQualifiedTypeName name="javax.swing.text.AbstractDocument"/>
+    <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
+    <fullyQualifiedTypeName name="java.awt.Dimension"/>
+    <fullyQualifiedTypeName name="java.awt.Color"/>
+    <fullyQualifiedTypeName name="javax.swing.border.LineBorder"/>
+    <fullyQualifiedTypeName name="java.awt.event.AdjustmentListener"/>
+    <fullyQualifiedTypeName name="java.awt.event.AdjustmentEvent"/>
 </qualifiedTypeNameHistroy>

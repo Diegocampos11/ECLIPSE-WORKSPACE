@@ -2,17 +2,25 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="puerto" key="selection"/>
+		<item value="areaScrollPane" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="areaScrollPane"/>
+			<item value="\n"/>
+			<item value="settext"/>
+			<item value="ip"/>
+			<item value="paqueteEnviar"/>
+			<item value="bis"/>
+			<item value="4321"/>
 			<item value="puerto"/>
 			<item value="bytesObjetosRecibidos"/>
 			<item value=""/>
 		</list>
 		<list key="replacehistory">
+			<item value="PUERTO"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

@@ -32,7 +32,6 @@ public class Pantalla extends JFrame {
 	private ReceptorMensajes receptorThread;
 	private static JTextArea mensajesRecibidos;
 	private static JScrollPane areaScrollPane;
-	private static JScrollPane msjEnviarScrollPane;
 	private JTextField msjParaEnviar;
 	private int altoTextField = 50;
 	
@@ -80,26 +79,13 @@ public class Pantalla extends JFrame {
 		this.repaint();
 		anyadirMensaje("Bienvenido al chat de Diego Camposx!\n"
 				+ "Ingrese la IP del grupo...");
-		//scrollpane automaticamente
-		areaScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() { 
-		     public void adjustmentValueChanged(AdjustmentEvent e) { 
-		    	 e.getAdjustable().setValue(e.getAdjustable().getMaximum()); 
-		     } 
-		});
 	}
 	
 	private void iniciarMsjParaEnviar() {
 		msjParaEnviar = new JTextField();
 		msjParaEnviar.setFont( mensajesRecibidos.getFont() );
 		msjParaEnviar.setBounds( 0, this.getContentPane().getHeight() - altoTextField, this.getContentPane().getWidth(), altoTextField);
-		//añadir scroll al msjParaEnviar
-		msjEnviarScrollPane = new JScrollPane();
-		msjEnviarScrollPane.setVerticalScrollBarPolicy( JScrollPane.VERTICAL_SCROLLBAR_ALWAYS );
-		msjEnviarScrollPane.setBounds( 0, this.getContentPane().getHeight() - altoTextField, this.getContentPane().getWidth(), altoTextField);
-		msjEnviarScrollPane.getViewport().setBackground( Color.BLACK );
-		msjEnviarScrollPane.getViewport().add( msjParaEnviar );
-		this.add( msjEnviarScrollPane );
-		this.repaint();
+		this.add( msjParaEnviar );
 		msjParaEnviar.requestFocus();
 		//COnvierto un jtextfield monolinea a multilinea :D
 		//forma larga...
@@ -134,7 +120,7 @@ public class Pantalla extends JFrame {
 			}
 	    });
 		//scrollpane automaticamente
-		msjEnviarScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() { 
+		areaScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() { 
 		     public void adjustmentValueChanged(AdjustmentEvent e) { 
 		    	 e.getAdjustable().setValue(e.getAdjustable().getMaximum()); 
 		     } 

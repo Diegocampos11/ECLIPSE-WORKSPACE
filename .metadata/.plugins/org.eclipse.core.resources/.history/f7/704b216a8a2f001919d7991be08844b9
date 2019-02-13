@@ -80,12 +80,6 @@ public class Pantalla extends JFrame {
 		this.repaint();
 		anyadirMensaje("Bienvenido al chat de Diego Camposx!\n"
 				+ "Ingrese la IP del grupo...");
-		//scrollpane automaticamente
-		areaScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() { 
-		     public void adjustmentValueChanged(AdjustmentEvent e) { 
-		    	 e.getAdjustable().setValue(e.getAdjustable().getMaximum()); 
-		     } 
-		});
 	}
 	
 	private void iniciarMsjParaEnviar() {
@@ -95,7 +89,7 @@ public class Pantalla extends JFrame {
 		//añadir scroll al msjParaEnviar
 		msjEnviarScrollPane = new JScrollPane();
 		msjEnviarScrollPane.setVerticalScrollBarPolicy( JScrollPane.VERTICAL_SCROLLBAR_ALWAYS );
-		msjEnviarScrollPane.setBounds( 0, this.getContentPane().getHeight() - altoTextField, this.getContentPane().getWidth(), altoTextField);
+		msjEnviarScrollPane.setBounds(0, 0, this.getContentPane().getWidth(), this.getContentPane().getHeight() - altoTextField );
 		msjEnviarScrollPane.getViewport().setBackground( Color.BLACK );
 		msjEnviarScrollPane.getViewport().add( msjParaEnviar );
 		this.add( msjEnviarScrollPane );
@@ -134,7 +128,7 @@ public class Pantalla extends JFrame {
 			}
 	    });
 		//scrollpane automaticamente
-		msjEnviarScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() { 
+		areaScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() { 
 		     public void adjustmentValueChanged(AdjustmentEvent e) { 
 		    	 e.getAdjustable().setValue(e.getAdjustable().getMaximum()); 
 		     } 

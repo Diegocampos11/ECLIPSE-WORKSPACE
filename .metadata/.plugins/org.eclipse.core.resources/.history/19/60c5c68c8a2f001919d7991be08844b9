@@ -80,12 +80,6 @@ public class Pantalla extends JFrame {
 		this.repaint();
 		anyadirMensaje("Bienvenido al chat de Diego Camposx!\n"
 				+ "Ingrese la IP del grupo...");
-		//scrollpane automaticamente
-		areaScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() { 
-		     public void adjustmentValueChanged(AdjustmentEvent e) { 
-		    	 e.getAdjustable().setValue(e.getAdjustable().getMaximum()); 
-		     } 
-		});
 	}
 	
 	private void iniciarMsjParaEnviar() {
@@ -134,7 +128,7 @@ public class Pantalla extends JFrame {
 			}
 	    });
 		//scrollpane automaticamente
-		msjEnviarScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() { 
+		areaScrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() { 
 		     public void adjustmentValueChanged(AdjustmentEvent e) { 
 		    	 e.getAdjustable().setValue(e.getAdjustable().getMaximum()); 
 		     } 
