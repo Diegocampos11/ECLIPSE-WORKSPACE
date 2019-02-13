@@ -73,12 +73,10 @@ public class Pantalla extends JFrame {
 		this.add( msjParaEnviar );
 		msjParaEnviar.requestFocus();
 		//COnvierto un jtextfield monolinea a multilinea :D
-		/*forma larga...
 		Document document= msjParaEnviar.getDocument();
 		AbstractDocument abstractDocument= (AbstractDocument) document;
 		DocumentFilter filter= new DocumentFilter();
-		abstractDocument.setDocumentFilter( filter );*/
-		( ( AbstractDocument ) msjParaEnviar.getDocument() ).setDocumentFilter( new DocumentFilter() );
+		abstractDocument.setDocumentFilter( filter );
 		msjParaEnviar.addKeyListener(new KeyListener() {
 
 	        @Override

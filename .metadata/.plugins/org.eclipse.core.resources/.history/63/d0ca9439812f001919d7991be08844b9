@@ -78,7 +78,6 @@ public class Pantalla extends JFrame {
 		AbstractDocument abstractDocument= (AbstractDocument) document;
 		DocumentFilter filter= new DocumentFilter();
 		abstractDocument.setDocumentFilter( filter );*/
-		( ( AbstractDocument ) msjParaEnviar.getDocument() ).setDocumentFilter( new DocumentFilter() );
 		msjParaEnviar.addKeyListener(new KeyListener() {
 
 	        @Override

@@ -10,15 +10,13 @@ import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.Document;
-import javax.swing.text.DocumentFilter;
-
 import Modelo.Mensaje;
 
 public class Pantalla extends JFrame {
@@ -27,6 +25,8 @@ public class Pantalla extends JFrame {
 	static JTextArea mensajesRecibidos;
 	JTextField msjParaEnviar;
 	int altoTextField = 50;
+	 /* Declare Map */
+	private Set<Integer> pressed = new HashSet<Integer>();
 	
 	//remitente
 	private MulticastSocket ms;
@@ -49,7 +49,8 @@ public class Pantalla extends JFrame {
 		setTitle("Mensajes recibidos");
 		iniciarPantallaMensajes();
 		iniciarMsjParaEnviar();
-		//receptor mensajes instancia
+		//tengo que unirme al grupo antes de lanzar el thread :D
+		//configurationMensajes();
 		receptorThread = new ReceptorMensajes();
 		//receptorThread.start();
 	}
@@ -71,25 +72,22 @@ public class Pantalla extends JFrame {
 		msjParaEnviar.setFont( mensajesRecibidos.getFont() );
 		msjParaEnviar.setBounds( 0, this.getContentPane().getHeight() - altoTextField, this.getContentPane().getWidth(), altoTextField);
 		this.add( msjParaEnviar );
-		msjParaEnviar.requestFocus();
-		//COnvierto un jtextfield monolinea a multilinea :D
-		/*forma larga...
-		Document document= msjParaEnviar.getDocument();
-		AbstractDocument abstractDocument= (AbstractDocument) document;
-		DocumentFilter filter= new DocumentFilter();
-		abstractDocument.setDocumentFilter( filter );*/
-		( ( AbstractDocument ) msjParaEnviar.getDocument() ).setDocumentFilter( new DocumentFilter() );
+		msjParaEnviar.requestFocus();  
 		msjParaEnviar.addKeyListener(new KeyListener() {
 
 	        @Override
 	        public void keyPressed(KeyEvent e) {
-
-            	if( e.isControlDown() && e.getKeyCode() == KeyEvent.VK_ENTER ){
-                    msjParaEnviar.setText( msjParaEnviar.getText().concat("\n") );
-            	}
-            	else if ( ( e.getKeyCode() == KeyEvent.VK_ENTER ) ) {
+	        	//pressed.add( e.getKeyCode() );
+	        	
+	            if ((e.getKeyCode() == KeyEvent.VK_ENTER) ) {
 	                enterPresionado();
 	            }
+	            
+	            //if (pressed.size() > 1) {
+	            	if( e.isControlDown() && e.getKeyCode() == KeyEvent.VK_C){
+	                    JOptionPane.showMessageDialog(null, "asdf", "asdf", JOptionPane.INFORMATION_MESSAGE);
+	            	}
+	            //}
 	        }
 
 			@Override
