@@ -11,8 +11,8 @@ public class Servidor {
 	public static final int PUERTO = 4321;
 
 	public static void main(String[] args) {
-		System.setProperty( "javax.net.ssl.keyStore", "/home/usuario/certificados/AlmacenServidor" );
-		System.setProperty( "javax.net.ssl.keyStorePassword" , "123456");
+		System.setProperty( "javax.net.ssl.keyStore", "/home/usuario/certificados/AlmacenServidorPractica" );
+		System.setProperty( "javax.net.ssl.keyStorePassword" , "practica");
 
 		System.out.println("Servidor iniciando...");
 		SSLServerSocketFactory fabricaServSocket = ( SSLServerSocketFactory ) SSLServerSocketFactory.getDefault(); 
