@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import clases.Espectaculo;
 
 public class Servidor {
+	/*
+	 * almacenservidor=practicadiego
+		almacencliente=clientediego
+		
+		la clase servidor solo lanzará el hilo y luego hago un wait
+		cada metodo tiene sus getters y sus setters
+		GeneradorEspectaculos creara el socket
+	 * */
 
 	public static final int PUERTO = 4321;
 	private ArrayList<Espectaculo> listaEspectaculo;
