@@ -1,4 +1,4 @@
-package clases;
+package cliente;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -10,12 +10,14 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
+import servidor.Servidor;
+
 public class Administrador {
 
 	public static void main(String[] args) {
 		SimpleDateFormat sdf = new SimpleDateFormat( "HH:mm:ss" );
-		System.setProperty( "javax.net.ssl.trustStore", "/home/usuario/certificados/AlmacenClientePractica" );
-		System.setProperty( "javax.net.ssl.trustStorePassword" , "987456");
+		System.setProperty( "javax.net.ssl.trustStore", "/home/usuario/certificados/practica/AlmacenClientePractica" );
+		System.setProperty( "javax.net.ssl.trustStorePassword" , "clientediego");
 		
 		SSLSocketFactory fabricaSSLSocket = ( SSLSocketFactory ) SSLSocketFactory.getDefault(); 
 		try {

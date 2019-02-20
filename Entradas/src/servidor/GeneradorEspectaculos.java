@@ -1,4 +1,4 @@
-package clases;
+package servidor;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -6,18 +6,18 @@ import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 
-public class Servidor {
-
-	public static final int PUERTO = 4321;
-
-	public static void main(String[] args) {
-		System.setProperty( "javax.net.ssl.keyStore", "/home/usuario/certificados/AlmacenServidorPractica" );
-		System.setProperty( "javax.net.ssl.keyStorePassword" , "practica");
+public class GeneradorEspectaculos extends Thread {
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		super.run();
+		System.setProperty( "javax.net.ssl.keyStore", "/home/usuario/certificados/practica/AlmacenServidorPractica" );
+		System.setProperty( "javax.net.ssl.keyStorePassword" , "practicadiego");
 
 		System.out.println("Servidor iniciando...");
 		SSLServerSocketFactory fabricaServSocket = ( SSLServerSocketFactory ) SSLServerSocketFactory.getDefault(); 
 		try {
-			SSLServerSocket servSock = (SSLServerSocket) fabricaServSocket.createServerSocket( PUERTO );
+			SSLServerSocket servSock = (SSLServerSocket) fabricaServSocket.createServerSocket( Servidor.PUERTO );
 			SSLSocket sock = (SSLSocket) servSock.accept();
 			//cliente conectado
 			System.out.println("Cliente conectado");
@@ -31,5 +31,4 @@ public class Servidor {
 			e.printStackTrace();
 		}
 	}
-
 }
