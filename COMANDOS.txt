@@ -1,0 +1,85 @@
+openssl
+ 1266  openssl --help
+ 1267  openssl -help
+ 1268  oepnssl --help
+ 1269  oepnssl help
+ 1270  oepnssl -help
+ 1271  openssl md5 holamundo.txt 
+ 1272  openssl dgst md5 holamundo.txt 
+ 1273  openssl dgst -sha256 holamundo.txt 
+ 1274  openssl dgst -sha512 holamundo.txt 
+ 1275  openssl enc -help
+ 1276  openssl enc -ciphers
+ 1277  openssl enc -aes-256-cb -e -in holamundo.txt -o holamunto.txt.enc
+ 1278  openssl enc -aes-256-cbc -e -in holamundo.txt -o holamunto.txt.enc
+ 1279  openssl enc -aes-256-cbc -e -in holamundo.txt -out holamunto.txt.enc
+ 1280  ls
+ 1281  openssl enc -aes-256-cbc -d -in holamundo.txt 
+ 1282  openssl enc -aes-256-cbc -d -in holamundo.txt.enc
+ 1283  openssl enc -aes-256-cbc -d -in holamunto.txt.enc 
+ 1284  cd .ssh/
+ 1285  ls
+ 1286  cat id_rsa
+ 1287  cat id_rsa.pub 
+ 1288  openssl rsa -in ./id_rsa -pubout -out ./id_rsa.pub.pem
+ 1289  ls
+ 1290  cat id_rsa.pub.pem 
+ 1291  cat id_rsa.pub
+ 1292  openssl rsault -encrypt -pubin -inkey id_rsa.pub.pem -in ./../holamunto.txt -out ./../holamunto.txt.enc.rsa
+ 1293  openssl rsautl -encrypt -pubin -inkey id_rsa.pub.pem -in ./../holamunto.txt -out ./../holamunto.txt.enc.rsa
+ 1294  openssl rsautl -encrypt -pubin -inkey id_rsa.pub.pem -in ./../holamundo.txt -out ./../holamunto.txt.enc.rsa
+ 1295  ls -l
+ 1296  cd ..
+ 1297  ls -l
+ 1298  cat holamunto.txt.enc.rsa 
+ 1299  openssl rsautl -decrypt ./.ssh/id_rsa -in holamunto.txt.enc.rsa 
+ 1300  openssl rsautl -decrypt -inkey ./.ssh/id_rsa -in holamunto.txt.enc.rsa 
+ 1301  mkdir clavesRSA
+ 1302  cd clavesRSA/
+ 1303  mkdir clave1
+ 1304  mkdir clave2
+ 1305  history
+ 1306  nanocd ..
+ 1307  cd ..
+ 1308  nano RSA.txt
+
+
+
+GENERACION de claves
+ 1309  cd clavesRSA/
+ 1310  cd clave1/
+ 1311  openssl genrsa -out clave.pem 2048
+ 1312  cat clave.pem 
+ 1313  openssl rsa -in clave.pem -pubout -out public.pem
+ 1314  ls
+ 1315  cat public.pem 
+ 1316  cd ..
+ 1317  cd clave2/
+ 1318  openssl genrsa -out clave2.pem 2048
+ 1319  openssl rsa -in clave2.pem -pubout -pout publica2.pem
+ 1320  openssl rsa -in clave2.pem -pubout -put publica2.pem
+ 1321  openssl rsa -in clave2.pem -pubout -out publica2.pem
+ 1322  less publica2.pem 
+ 1323  cat clave2.pem 
+ 1324  cat publica2.pem 
+ 1325  clear
+ 1326  keytool
+ 1327  cd ..
+ 1328  mkdir certificados
+ 1329  cd certificados/
+ 1330  cd ..
+ 1331  ls
+ 1332  gedir RSA.txt 
+ 1333  gedit RSA.txt 
+ 1334  xda RSA.txt 
+ 1335  cd certificados/
+ 1336  keytool -genkeypair -alias ClaveServidor -keyalg RSA -keystore Almacen -storepass 
+ 1337  keytool -genkeypair -alias ClaveServidor -keyalg RSA -keystore Almacen -storepass 123456
+ 1338  ls
+ 1339  ls -l
+ 1340  xed Almacen 
+ 1341  keytool -export -alias ClaveServidor -keystore ./Almacen -file CertificadoServidor.cert
+ 1342  ls
+ 1343  mv Almacen AlmacenServidor
+ 1344  keytool -import -alias CrtServ -file CertificadoServidor.cert -keystore AlmacenCliente -storepass 987456
+
