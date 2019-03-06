@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.util.LinkedList"/>
-    <fullyQualifiedTypeName name="java.util.Random"/>
-    <fullyQualifiedTypeName name="java.net.SocketAddress"/>
-    <fullyQualifiedTypeName name="ConexionLocalServidor"/>
     <fullyQualifiedTypeName name="sun.net.InetAddressCachePolicy"/>
     <fullyQualifiedTypeName name="Programa"/>
     <fullyQualifiedTypeName name="java.util.GregorianCalendar"/>
@@ -15,7 +11,6 @@
     <fullyQualifiedTypeName name="javax.net.ssl.SSLSocketFactory"/>
     <fullyQualifiedTypeName name="javax.net.ssl.SSLSession"/>
     <fullyQualifiedTypeName name="java.math.BigInteger"/>
-    <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
     <fullyQualifiedTypeName name="javax.swing.JTextField"/>
     <fullyQualifiedTypeName name="javax.swing.border.Border"/>
@@ -24,7 +19,6 @@
     <fullyQualifiedTypeName name="java.net.ServerSocket"/>
     <fullyQualifiedTypeName name="java.util.Scanner"/>
     <fullyQualifiedTypeName name="interfaces.Receptor"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.net.Socket"/>
     <fullyQualifiedTypeName name="java.io.DataOutputStream"/>
     <fullyQualifiedTypeName name="java.net.DatagramSocket"/>
@@ -52,4 +46,18 @@
     <fullyQualifiedTypeName name="javax.swing.border.LineBorder"/>
     <fullyQualifiedTypeName name="java.awt.event.AdjustmentListener"/>
     <fullyQualifiedTypeName name="java.awt.event.AdjustmentEvent"/>
+    <fullyQualifiedTypeName name="servidor.GeneradorEspectaculos"/>
+    <fullyQualifiedTypeName name="java.util.concurrent.locks.ReentrantLock"/>
+    <fullyQualifiedTypeName name="clases.Espectaculo"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="java.security.Security"/>
+    <fullyQualifiedTypeName name="javax.crypto.SecretKey"/>
+    <fullyQualifiedTypeName name="javax.crypto.KeyGenerator"/>
+    <fullyQualifiedTypeName name="java.security.KeyPair"/>
+    <fullyQualifiedTypeName name="java.security.PrivateKey"/>
+    <fullyQualifiedTypeName name="java.security.PublicKey"/>
+    <fullyQualifiedTypeName name="javax.crypto.Cipher"/>
+    <fullyQualifiedTypeName name="java.security.MessageDigest"/>
+    <fullyQualifiedTypeName name="javax.crypto.spec.SecretKeySpec"/>
 </qualifiedTypeNameHistroy>
