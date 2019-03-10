@@ -1,5 +1,4 @@
-package cifrarDescifrar;
-
+package cliente;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -41,7 +40,7 @@ public class CifrarAESClaveString {
 			System.out.println( mensajeCifradotxt );
 			
 			cifrador.init( Cipher.DECRYPT_MODE, claveSecreta);
-			byte mensajeDescifrado[] = cifrador.doFinal( mensajeCifrado );
+			byte mensajeDescifrado[] = cifrador.doFinal( mensajeCifradotxt.getBytes() );
 			System.out.println( "Resultado descencriptar " + new String( mensajeDescifrado ) );
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
 			e.printStackTrace();
